@@ -67,6 +67,21 @@ class TarefaDaoTest {
     }
 
     @Test
+    fun deletarRemoveSomenteATarefaSelecionada() = runTest {
+        dao.inserir(Tarefa(titulo = "Manter 1", descricao = ""))
+        dao.inserir(Tarefa(titulo = "Excluir", descricao = ""))
+        dao.inserir(Tarefa(titulo = "Manter 2", descricao = ""))
+        val selecionada = dao.listarTodas().first().first { it.titulo == "Excluir" }
+
+        dao.deletar(selecionada)
+
+        val restantes = dao.listarTodas().first().map { it.titulo }
+        assertEquals(2, restantes.size)
+        assertFalse(restantes.contains("Excluir"))
+        assertTrue(restantes.containsAll(listOf("Manter 1", "Manter 2")))
+    }
+
+    @Test
     fun tarefasComPrazoAparecemAntesDeAvulsasEOrdenadasPorProximidade() = runTest {
         val agora = System.currentTimeMillis()
         dao.inserir(Tarefa(titulo = "Avulsa", descricao = ""))
