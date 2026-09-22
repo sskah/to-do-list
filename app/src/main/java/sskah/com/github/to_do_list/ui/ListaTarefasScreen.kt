@@ -1,4 +1,4 @@
-package sskah.com.github.to_do_list.ui.theme
+package sskah.com.github.to_do_list.ui
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
